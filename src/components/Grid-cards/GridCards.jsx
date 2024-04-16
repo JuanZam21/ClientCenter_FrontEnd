@@ -17,37 +17,16 @@ const Item = styled(Paper)(({theme}) => ({
   cursor: "pointer",
 }));
 
-const titles = [
-  {
-    title: "Quejas y reclamaciones",
-    href: "/quejas",
-  },
-  {
-    title: "Solicitudes",
-    href: "/solicitudes",
-  },
-  {
-    title: "Consultas",
-    href: "/consultas",
-  },
-  {
-    title: "Sugerencias",
-    href: "/sugerencias",
-  },
-  {
-    title: "Reclamos",
-    href: "/reclamos",
-  },
-];
 
-export default function GridCards() {
+
+export default function GridCards({dataCards}) {
   const hanfleNavigae = (href) => {
     window.open(href, "_self");
   };
   return (
     <Box sx={{flexGrow: 1}}>
       <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
-        {titles?.map((item, index) => (
+        {dataCards?.map((item, index) => (
           <Grid item xs={2} sm={4} md={4} key={index}>
             <article>
               <Item

@@ -1,19 +1,22 @@
-import Container from "@layouts/Container";
-import * as React from "react";
-import {GridCards, ModalIdClient} from "./components";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import AuthLayout from "./layouts/AuthLayout";
+import {NotFoundPage, RegistroIdCliente} from "./pages";
+import Home from "./pages/home/Home";
 
 function App() {
-  const [idClient, setIdClient] = React.useState(null);
   return (
-    <>
-      <Container>
-        <section className="pt-20">
-          <h1 className="text-bold text-5xl">Bienvenido a Client Center</h1>
-        </section>
-      </Container>
-      <ModalIdClient idClient={idClient} setIdClient={setIdClient} />
-      <section className="px-16 mt-10">{idClient && <GridCards />}</section>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="registro" />} />
+        <Route path="/*" element={<NotFoundPage />} />
+        <Route path="registro" element={<RegistroIdCliente />} />
+
+        <Route element={<AuthLayout />}>
+          <Route path="/home" element={<Home/>}>
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
