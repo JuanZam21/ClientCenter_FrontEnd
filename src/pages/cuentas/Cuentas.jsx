@@ -4,9 +4,8 @@ import {FaArrowLeft} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import {CircularProgress} from "@mui/material";
 
-function Tarjetas() {
+function Cuentas() {
   const navigate = useNavigate();
-
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleBack = (e) => {
@@ -25,7 +24,7 @@ function Tarjetas() {
       <section className="flex justify-center">
         <section className="p-5 w-full">
           <article className="px-10">
-            <h1 className="text-[#ed1218] text-4xl  text-bold">Tarjetas</h1>
+            <h1 className="text-[#ed1218] text-4xl  text-bold">Cuentas</h1>
             <article className="flex justify-between mt-5 gap-28">
               <article className="w-full flex flex-col gap-2">
                 <label className="text-ms">Cedula del Cliente</label>
@@ -127,4 +126,4 @@ const consultas = [
   },
 ];
 
-export default Tarjetas;
+export default Cuentas;

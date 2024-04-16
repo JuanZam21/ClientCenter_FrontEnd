@@ -39,7 +39,10 @@ function Home() {
               </button>
             </article>
             <article>
-              <button className="bg-[#ed1218] rounded-lg px-4 py-1 flex items-center gap-1">
+              <button
+                className="bg-[#ed1218] rounded-lg px-4 py-1 flex items-center gap-1"
+                onClick={(e) => handleNavigation(e, "/creditos")}
+              >
                 <GiReceiveMoney />
                 Créditos
               </button>
@@ -47,13 +50,19 @@ function Home() {
           </div>
           <div className="flex gap-5">
             <article>
-              <button className="bg-[#ed1218] rounded-lg px-4 py-1 flex items-center gap-1">
+              <button
+                className="bg-[#ed1218] rounded-lg px-4 py-1 flex items-center gap-1"
+                onClick={(e) => handleNavigation(e, "/cuentas")}
+              >
                 <MdAccountBalanceWallet />
                 Cuentas
               </button>
             </article>
             <article>
-              <button className="bg-[#ed1218] rounded-lg px-4 py-1 flex items-center gap-1">
+              <button
+                className="bg-[#ed1218] rounded-lg px-4 py-1 flex items-center gap-1"
+                onClick={(e) => handleNavigation(e, "/transacciones")}
+              >
                 <FaMoneyBillTransfer />
                 Transacciones
               </button>
