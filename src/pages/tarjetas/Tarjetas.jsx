@@ -1,12 +1,23 @@
 import React from "react";
 import {NavBar} from "../../components";
+import {FaArrowLeft} from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function Tarjetas() {
+    const navigate = useNavigate();
+
+    const handleBack = (e)=>{
+        e.preventDefault()
+        navigate('/home')
+    }
   return (
     <div>
       <NavBar />
+      <section className="p-5 ml-5 cursor-pointer" onClick={(e)=> handleBack(e)} >
+        <FaArrowLeft color="#ed1218"  size={40} />
+      </section>
       <section className="flex justify-center">
-        <section className="p-10 w-full">
+        <section className="p-5 w-full">
           <article className="px-10">
             <h1 className="text-[#ed1218] text-4xl  text-bold">Tarjetas</h1>
             <article className="flex justify-between mt-5 gap-28">

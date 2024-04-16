@@ -5,8 +5,15 @@ import {GiReceiveMoney} from "react-icons/gi";
 import {MdAccountBalanceWallet} from "react-icons/md";
 import {FaMoneyBillTransfer} from "react-icons/fa6";
 import {IoIosLogOut} from "react-icons/io";
+import {useNavigate} from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
+
+  const handleNavigation = (e, path) => {
+    e.preventDefault();
+    navigate(path);
+  };
   return (
     <section>
       <NavBar />
@@ -23,7 +30,10 @@ function Home() {
         <section className="flex flex-col gap-5">
           <div className="flex gap-10">
             <article>
-              <button className="bg-[#ed1218] rounded-lg px-4 py-1 flex items-center gap-1">
+              <button
+                className="bg-[#ed1218] rounded-lg px-4 py-1 flex items-center gap-1"
+                onClick={(e) => handleNavigation(e, "/tarjetas")}
+              >
                 <FaCreditCard />
                 Tarjetas
               </button>
