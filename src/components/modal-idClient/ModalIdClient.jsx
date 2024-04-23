@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import useAuth from "../../hooks/useAuth";
-import {Alert, Button, CircularProgress} from "@mui/material";
+import {Alert, CircularProgress} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
 const style = {
@@ -36,7 +36,6 @@ export default function ModalIdClient({setIdClient}) {
         `http://localhost:9000/api/auth/client/${id}`
       );
       const response = await findClient.json();
-      console.log(response);
 
       if (!response || !response.success) {
         setError({isError: true, message: response.message});
