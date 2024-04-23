@@ -85,7 +85,6 @@ function Creditos() {
           {error.message}
         </Alert>
       )}
-      <NavBar />
       <section
         className="p-5 ml-5 cursor-pointer"
         onClick={(e) => handleBack(e)}
