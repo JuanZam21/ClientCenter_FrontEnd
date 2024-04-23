@@ -1,8 +1,9 @@
-import {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import useAuth from "../../hooks/useAuth";
 import {Alert, Button, CircularProgress} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -18,35 +19,38 @@ const style = {
   pb: 3,
 };
 
-export default function ModalIdClient({idClient, setIdClient}) {
+export default function ModalIdClient({setIdClient}) {
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(true);
   const [error, setError] = useState({isError: false, message: ""});
   const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState(null);
 
-  const {isAuthenticated} = useAuth();
-
-  useEffect(() => {
-    if (!idClient) {
-      setOpen(true);
-    }
-  }, [idClient]);
+  const {login} = useAuth();
 
   const handleClose = async () => {
     setIsLoading(true);
     try {
-      const findClient = await fetch(`http://localhost:3001/clients/${id}`);
+      const findClient = await fetch(
+        `http://localhost:9000/api/auth/client/${id}`
+      );
       const response = await findClient.json();
+      console.log(response);
+
+      if (!response || !response.success) {
+        setError({isError: true, message: response.message});
+        return
+      }
+      login(response.data);
+      setIdClient(id);
+      setOpen(false);
+      navigate("/home");
     } catch (error) {
-      setError({isError: true, message: "El cliente no existe"});
-      return;
+      setError({isError: true, message: error.message});
     } finally {
       setIsLoading(false);
     }
-
-    if (!isAuthenticated) return;
-    setOpen(false);
-    setIdClient(id);
   };
 
   return (
@@ -62,7 +66,7 @@ export default function ModalIdClient({idClient, setIdClient}) {
             id="parent-modal-title"
             className="text-bold text-xl text-center text-[#ed1218]"
           >
-            Ingresa el numero del documento de identidad
+            Ingresa el número del documento de identidad
           </h2>
           <section
             id="parent-modal-description"

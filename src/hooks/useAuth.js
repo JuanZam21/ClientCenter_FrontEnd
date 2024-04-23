@@ -1,36 +1,36 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 
 const useAuth = () => {
-  // Estado para almacenar el estado de autenticación
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // Estado para almacenar la información del usuario
+  const [user, setUser] = useState(null);
 
   // Comprobamos si el usuario está autenticado al cargar el componente
   useEffect(() => {
     const checkAuthentication = () => {
-      // Comprobamos si hay un token de autenticación en el localStorage
-      const token = localStorage.getItem("authToken");
-      // Si hay un token, establecemos isAuthenticated en true, de lo contrario en false
-      setIsAuthenticated(!!token);
+      // Comprobamos si hay un usuario autenticado en el localStorage
+      const userJSON = localStorage.getItem("authUser");
+      // Si hay un usuario, establecemos el estado del usuario con esa información
+      setUser(userJSON ? JSON.parse(userJSON) : null);
     };
 
     checkAuthentication();
   }, []);
 
   // Función para iniciar sesión
-  const login = (token) => {
-    localStorage.setItem("authToken", token);
-    setIsAuthenticated(true);
+  const login = (userData) => {
+    localStorage.setItem("authUser", JSON.stringify(userData));
+    setUser(userData);
   };
 
   // Función para cerrar sesión
   const logout = () => {
-    localStorage.removeItem("authToken");
-    setIsAuthenticated(false);
+    localStorage.removeItem("authUser");
+    setUser(null);
   };
 
-  // Devolvemos el estado de autenticación y las funciones de inicio y cierre de sesión
+  // Devolvemos la información del usuario y las funciones de inicio y cierre de sesión
   return {
-    isAuthenticated,
+    user,
     login,
     logout,
   };

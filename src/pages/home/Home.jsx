@@ -6,18 +6,31 @@ import {MdAccountBalanceWallet} from "react-icons/md";
 import {FaMoneyBillTransfer} from "react-icons/fa6";
 import {IoIosLogOut} from "react-icons/io";
 import {useNavigate} from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 function Home() {
   const navigate = useNavigate();
+  const {logout} = useAuth();
 
   const handleNavigation = (e, path) => {
     e.preventDefault();
     navigate(path);
   };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+    navigate("/registro");
+  };
   return (
     <section>
       <NavBar />
-      <div className="flex items-center  text-xl justify-end mr-10 mt-2 cursor-pointer">
+      <div
+        className="flex items-center  text-xl justify-end mr-10 mt-2 cursor-pointer"
+        onClick={(e) => {
+          handleLogout(e);
+        }}
+      >
         <article className="flex gap-1 shadow-lg rounded-md items-center p-2">
           <IoIosLogOut />
           Cerrar sesion

@@ -1,8 +1,11 @@
 import React from "react";
 import Logo from "../../assets/img/logo.png";
 import {FaUserAlt} from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
 
 function NavBar() {
+  const {user} = useAuth()
+  console.log(user)
   return (
     <nav className="bg-[#ed1218] flex justify-between text-white text-2xl h-16 ">
       <div className="flex w-1/4 items-center ml-10">
@@ -12,7 +15,7 @@ function NavBar() {
 
       <div className="flex w-1/4 items-center">
         <FaUserAlt />
-        <div className="ml-1">¡Hola Alexander!</div>
+        <div className="ml-1">¡Hola {user?.nombre} {user?.apellido}!</div>
       </div>
     </nav>
   );
