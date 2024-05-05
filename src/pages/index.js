@@ -5,5 +5,15 @@ import Tarjetas from "./tarjetas/Tarjetas";
 import Creditos from "./creditos/Creditos";
 import Cuentas from "./cuentas/Cuentas";
 import Transacciones from "./transacciones/Transacciones";
+import Bienvenida from "./bienvenida/Bienvenida";
 
-export {NotFoundPage, RegistroIdCliente, Home, Tarjetas, Creditos, Cuentas, Transacciones };
+export {
+  NotFoundPage,
+  RegistroIdCliente,
+  Home,
+  Tarjetas,
+  Creditos,
+  Cuentas,
+  Transacciones,
+  Bienvenida
+};

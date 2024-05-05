@@ -8,14 +8,16 @@ import {
   Creditos,
   Cuentas,
   Transacciones,
+  Bienvenida,
 } from "./pages";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="registro" />} />
+        {/* <Route path="/" element={<Navigate to="registro" />} /> */}
         <Route path="/*" element={<NotFoundPage />} />
+        <Route path="/" element={<Bienvenida />} />
         <Route path="registro" element={<RegistroIdCliente />} />
 
         <Route element={<AuthLayout />}>
