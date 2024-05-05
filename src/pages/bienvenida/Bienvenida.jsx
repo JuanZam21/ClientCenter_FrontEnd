@@ -1,7 +1,14 @@
+import {useNavigate} from "react-router-dom";
 import Logo from "../../assets/img/logo.png";
 import "./style/bienvenida.css";
 
 function Bienvenida() {
+  const navigate = useNavigate();
+
+  const redirectLogin = (e) => {
+    e.preventDefault();
+    navigate("/login");
+  };
   return (
     <div className="bg pt-14 text-white">
       <section className="flex justify-around items-center">
@@ -10,7 +17,7 @@ function Bienvenida() {
           <span className="font-bold text-2xl">Client Center</span>
         </article>
         <article>
-          <button className="border  px-5 rounded-2xl">
+          <button className="border  px-5 rounded-2xl" onClick={redirectLogin}>
             <span className="font-light">Ingresa</span>
           </button>
         </article>
