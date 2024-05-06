@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {NavBar} from "../../components";
 import {FaCreditCard} from "react-icons/fa6";
 import {GiReceiveMoney} from "react-icons/gi";
@@ -10,7 +10,14 @@ import useAuth from "../../hooks/useAuth";
 
 function Home() {
   const navigate = useNavigate();
-  const {logout} = useAuth();
+  const {user, loading, logout} = useAuth();
+
+  useEffect(() => {
+    console.log('esta entrando')
+    if (!user.cliente && !loading) {
+      navigate("/registro");
+    }
+  }, [user.cliente, loading, navigate]);
 
   const handleNavigation = (e, path) => {
     e.preventDefault();
@@ -19,7 +26,7 @@ function Home() {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    logout();
+    logout("cliente");
     navigate("/registro");
   };
   return (

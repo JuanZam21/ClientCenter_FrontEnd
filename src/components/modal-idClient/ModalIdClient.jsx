@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import useAuth from "../../hooks/useAuth";
@@ -19,17 +19,23 @@ const style = {
   pb: 3,
 };
 
-export default function ModalIdClient({setIdClient}) {
+export default function ModalIdClient() {
   const navigate = useNavigate();
 
-  const [open, setOpen] = useState(true);
   const [error, setError] = useState({isError: false, message: ""});
   const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState(null);
 
-  const {login} = useAuth();
+  const {user, loading, login} = useAuth();
 
-  const handleClose = async () => {
+  useEffect(() => {
+    if (user.cliente && !loading) {
+      navigate("/home");
+    }
+  }, [user.cliente, loading, navigate]);
+
+  const handleClose = async (e) => {
+    e.preventDefault();
     setIsLoading(true);
     try {
       const findClient = await fetch(
@@ -39,12 +45,9 @@ export default function ModalIdClient({setIdClient}) {
 
       if (!response || !response.success) {
         setError({isError: true, message: response.message});
-        return
+        return;
       }
-      login(response.data);
-      setIdClient(id);
-      setOpen(false);
-      navigate("/home");
+      login(response.data, "cliente");
     } catch (error) {
       setError({isError: true, message: error.message});
     } finally {
@@ -52,10 +55,15 @@ export default function ModalIdClient({setIdClient}) {
     }
   };
 
+  const handleCancelRedirect = (e) => {
+    e.preventDefault();
+    navigate("/dashboard");
+  };
+
   return (
     <div className="mt-10">
       <Modal
-        open={open}
+        open={true}
         onClose={handleClose}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
@@ -78,10 +86,10 @@ export default function ModalIdClient({setIdClient}) {
               onChange={(e) => setId(e.target.value)}
             />
           </section>
-          <section className="mt-10 flex justify-center">
+          <section className="mt-10 flex justify-around">
             <button
               onClick={handleClose}
-              className="bg-[#ed1218] p-3 w-20 rounded-3xl text-white flex items-center justify-center"
+              className="bg-[#ed1218] p-1 px-2 w-20 rounded-3xl text-white flex items-center justify-center"
             >
               {isLoading ? (
                 <CircularProgress size={20} color="inherit" />
@@ -89,6 +97,7 @@ export default function ModalIdClient({setIdClient}) {
                 "Ingresar"
               )}
             </button>
+            <button onClick={handleCancelRedirect}>Cancelar</button>
           </section>
           {error.isError && (
             <Alert className="mt-5" severity="error">

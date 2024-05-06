@@ -18,7 +18,7 @@ function Bienvenida() {
         </article>
         <article>
           <button className="border  px-5 rounded-2xl" onClick={redirectLogin}>
-            <span className="font-light">Ingresa</span>
+            <span className="font-light text-xl">Ingresa</span>
           </button>
         </article>
       </section>

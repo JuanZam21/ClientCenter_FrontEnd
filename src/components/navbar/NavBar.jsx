@@ -15,7 +15,7 @@ function NavBar() {
       <div className="flex w-1/4 items-center">
         <FaUserAlt />
         <div className="ml-1">
-          ¡Hola {user?.nombre} {user?.apellido}!
+          ¡Hola {user.agente?.nombre} {user.agente?.apellido}!
         </div>
       </div>
     </nav>

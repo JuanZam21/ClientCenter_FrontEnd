@@ -6,6 +6,8 @@ import Creditos from "./creditos/Creditos";
 import Cuentas from "./cuentas/Cuentas";
 import Transacciones from "./transacciones/Transacciones";
 import Bienvenida from "./bienvenida/Bienvenida";
+import Login from "./login/Login";
+import Dashboard from "./dashboard/Dashboard";
 
 export {
   NotFoundPage,
@@ -15,5 +17,7 @@ export {
   Creditos,
   Cuentas,
   Transacciones,
-  Bienvenida
+  Bienvenida,
+  Login,
+  Dashboard,
 };

@@ -9,18 +9,21 @@ import {
   Cuentas,
   Transacciones,
   Bienvenida,
+  Login,
+  Dashboard,
 } from "./pages";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<Navigate to="registro" />} /> */}
         <Route path="/*" element={<NotFoundPage />} />
         <Route path="/" element={<Bienvenida />} />
-        <Route path="registro" element={<RegistroIdCliente />} />
+        <Route path="/login" element={<Login />} />
 
-        <Route element={<AuthLayout />}>
+        <Route element={<AuthLayout perfil={"agente"} path={"/login"} />}>
+          <Route path="/dashboard" element={<Dashboard />} />;
+          <Route path="/registro" element={<RegistroIdCliente />} />
           <Route path="/home" element={<Home />}></Route>
           <Route path="/tarjetas" element={<Tarjetas />}></Route>
           <Route path="/creditos" element={<Creditos />}></Route>

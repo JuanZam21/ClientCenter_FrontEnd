@@ -44,7 +44,7 @@ function Tarjetas() {
 
     setIsLoading(true);
     const payload = {
-      idCliente: user?.documento_identidad,
+      idCliente: user.cliente?.documento_identidad,
       ...solicitud,
     };
 
@@ -96,7 +96,7 @@ function Tarjetas() {
                 <label className="text-ms">Cedula del Cliente</label>
                 <input
                   readOnly
-                  placeholder={user?.documento_identidad || ""}
+                  placeholder={user.cliente?.documento_identidad || ""}
                   className="w-full h-10 pl-5 rounded-2xl border border-solid border-black cursor-pointer"
                   type="text"
                 />
@@ -106,7 +106,7 @@ function Tarjetas() {
                 <input
                   readOnly
                   className="w-full pl-5 h-10 rounded-2xl border border-solid border-black cursor-pointer"
-                  placeholder={`${user?.nombre} ${user?.apellido}` || ""}
+                  placeholder={`${user.cliente?.nombre} ${user.cliente?.apellido}` || ""}
                   type="text"
                 />
               </article>
