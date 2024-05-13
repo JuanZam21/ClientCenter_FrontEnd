@@ -33,7 +33,7 @@ function generarDatosHistorialLlamadas(cantidad) {
   return datos;
 }
 
-const datos = generarDatosHistorialLlamadas(100)
+const datos = generarDatosHistorialLlamadas(100);
 
 export default function Dashboard() {
   const refBarras = useRef(null);
@@ -47,7 +47,7 @@ export default function Dashboard() {
       labels: datos.map((d) => d.fecha),
       datasets: [
         {
-          label: "Duración de las llamadas",
+          label: "Duración de las llamadas (minutos)",
           data: datos.map((d) => d.duracion_llamada),
           backgroundColor: "rgba(75,192,192,0.4)",
           borderColor: "rgba(75,192,192,1)",
@@ -84,7 +84,7 @@ export default function Dashboard() {
       labels: datos.map((d) => d.fecha),
       datasets: [
         {
-          label: "ID del empleado",
+          label: "Tus llamadas",
           data: datos.map((d) => d.id_empleado),
           fill: false,
           backgroundColor: "rgba(75,192,192,0.4)",
