@@ -10,26 +10,23 @@ function Bienvenida() {
     navigate("/login");
   };
   return (
-    <div className="bg pt-14 text-white">
-      <section className="flex justify-around items-center">
+    <div className="bg pt-12 text-white pl-20 flex flex-col items-start">
+      <section className="flex">
         <article className="flex items-center">
-          <img className="w-32" src={Logo} alt="" />
+          <img className="w-28" src={Logo} alt="" />
           <span className="font-bold text-2xl">Client Center</span>
         </article>
-        <article>
-          <button className="border  px-5 rounded-2xl" onClick={redirectLogin}>
-            <span className="font-light text-xl">Ingresa</span>
-          </button>
-        </article>
       </section>
-      <section className="mt-20 flex justify-around">
+      <section className="mt-20 flex">
         <article className="ml-5">
           <h1 className="font-bold text-5xl">
             Resuelve tus dudas <p> al instante</p>
           </h1>
-          <p className="font-light mt-5">Asesores 100% calificados</p>
+          <p className="font-light mt-5 text-2xl">Asesores 100% calificados</p>
+          <button className="border  px-5 rounded-2xl mt-3" onClick={redirectLogin}>
+            <span className="font-bold text-2xl">Ingresa</span>
+          </button>
         </article>
-        <article></article>
       </section>
     </div>
   );

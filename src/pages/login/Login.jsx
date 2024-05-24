@@ -56,9 +56,9 @@ function Login() {
           {error.message}
         </Alert>
       )}
-      <section className="flex justify-around items-center">
+      <section className="flex pl-24">
         <article className="flex items-center">
-          <img className="w-32" src={Logo} alt="" />
+          <img className="w-28" src={Logo} alt="" />
           <span className="font-bold text-2xl">Client Center</span>
         </article>
         <article></article>
@@ -68,7 +68,7 @@ function Login() {
           <h1 className="font-bold text-5xl">
             Resuelve tus dudas <p> al instante</p>
           </h1>
-          <p className="font-light mt-5">Asesores 100% calificados</p>
+          <p className="font-light mt-5 text-2xl">Asesores 100% calificados</p>
         </article>
         <article className="bg-slate-100 w-1/4 rounded-xl">
           <form action="" className="text-[#ed1218] mt-5 p-5 space-y-5">
