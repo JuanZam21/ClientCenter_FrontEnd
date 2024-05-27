@@ -35,12 +35,14 @@ function NavBar() {
           ¡Hola {user.agente?.nombre} {user.agente?.apellido}!
         </div>
         <LongMenu>
-          <MenuItem onClick={(e) => handleLogout(e, "cliente", "/registro")}>
-            <span className="mr-2">
-              <HiOutlinePhoneMissedCall />
-            </span>
-            Finalizar llamada
-          </MenuItem>
+          {user.cliente && (
+            <MenuItem onClick={(e) => handleLogout(e, "cliente", "/registro")}>
+              <span className="mr-2">
+                <HiOutlinePhoneMissedCall />
+              </span>
+              Finalizar llamada
+            </MenuItem>
+          )}
           <MenuItem onClick={(e) => handleLogout(e, "agente", "/login")}>
             <span className="mr-2">
               <IoIosLogOut />

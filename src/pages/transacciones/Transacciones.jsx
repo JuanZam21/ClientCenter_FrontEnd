@@ -45,6 +45,10 @@ function Transacciones() {
     setIsLoading(true);
     const payload = {
       idCliente: user.cliente?.documento_identidad,
+      idEmpleado: user.agente?.documento_identidad,
+      tipoAtencion: "transacciones",
+      descripcion: solicitud.categoria,
+      fechaAtencion: new Date(),
       ...solicitud,
     };
 
@@ -122,7 +126,10 @@ function Transacciones() {
               <select
                 className="w-full pl-5 h-10 rounded-2xl border border-solid border-black"
                 onChange={(event) => {
-                  setSolicitud({[event.target.value]: true});
+                  setSolicitud({
+                    [event.target.value]: true,
+                    categoria: event.target.value,
+                  });
                 }}
                 id=""
               >

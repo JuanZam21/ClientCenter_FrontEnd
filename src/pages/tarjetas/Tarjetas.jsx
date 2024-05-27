@@ -45,6 +45,10 @@ function Tarjetas() {
     setIsLoading(true);
     const payload = {
       idCliente: user.cliente?.documento_identidad,
+      idEmpleado: user.agente?.documento_identidad,
+      tipoAtencion: "tarjeta",
+      descripcion: solicitud.categoria,
+      fechaAtencion: new Date(),
       ...solicitud,
     };
 
@@ -106,7 +110,9 @@ function Tarjetas() {
                 <input
                   readOnly
                   className="w-full pl-5 h-10 rounded-2xl border border-solid border-black cursor-pointer"
-                  placeholder={`${user.cliente?.nombre} ${user.cliente?.apellido}` || ""}
+                  placeholder={
+                    `${user.cliente?.nombre} ${user.cliente?.apellido}` || ""
+                  }
                   type="text"
                 />
               </article>
@@ -116,7 +122,10 @@ function Tarjetas() {
               <select
                 className="w-full pl-5 h-10 rounded-2xl border border-solid border-black"
                 onChange={(event) => {
-                  setSolicitud({[event.target.value]: true});
+                  setSolicitud({
+                    [event.target.value]: true,
+                    categoria: event.target.value,
+                  });
                 }}
                 id=""
               >
