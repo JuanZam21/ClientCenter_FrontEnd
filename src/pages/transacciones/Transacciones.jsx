@@ -45,8 +45,8 @@ function Transacciones() {
 
     setIsLoading(true);
     const payload = {
-      idCliente: user.cliente?.id,
-      idEmpleado: user.agente?.id,
+      idCliente: user.cliente?.documento_identidad,
+      idEmpleado: user.agente?.documento_identidad,
       tipoAtencion: "transacciones",
       descripcion: solicitud.categoria,
       fechaAtencion: new Date(),
