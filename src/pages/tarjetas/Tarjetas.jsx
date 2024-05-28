@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {Alert, CircularProgress} from "@mui/material";
 import useAuth from "../../hooks/useAuth";
 import ModalResponseTarjeta from "./response/TarjetaResponse";
+import {config} from "../../config/config";
 
 function Tarjetas() {
   const navigate = useNavigate();
@@ -19,9 +20,7 @@ function Tarjetas() {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(
-        "http://localhost:9000/api/tarjeta/questions"
-      );
+      const response = await fetch(`${config.baseUrl}/api/tarjeta/questions`);
       const result = await response.json();
 
       if (!result || !result.success) {
@@ -44,8 +43,8 @@ function Tarjetas() {
 
     setIsLoading(true);
     const payload = {
-      idCliente: user.cliente?.documento_identidad,
-      idEmpleado: user.agente?.documento_identidad,
+      idCliente: user.cliente?.id,
+      idEmpleado: user.agente?.id,
       tipoAtencion: "tarjeta",
       descripcion: solicitud.categoria,
       fechaAtencion: new Date(),
@@ -53,7 +52,7 @@ function Tarjetas() {
     };
 
     try {
-      const send = await fetch("http://localhost:9000/api/tarjeta", {
+      const send = await fetch(`${config.baseUrl}/api/tarjeta`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,6 +67,7 @@ function Tarjetas() {
       }
       setResData(response.data);
     } catch (error) {
+      console.log(error);
       setError({isError: true, message: error.message});
     } finally {
       setIsLoading(false);

@@ -7,12 +7,16 @@ import {MenuItem} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {HiOutlinePhoneMissedCall} from "react-icons/hi";
 import {IoIosLogOut} from "react-icons/io";
+import {config} from "../../config/config";
 
 function NavBar() {
   const navigate = useNavigate();
   const {user, logout} = useAuth();
 
-  const handleLogout = (entityLogout, navigateTo) => {
+  const handleLogout = (e, entityLogout, navigateTo) => {
+    if (e) {
+      e.preventDefault();
+    }
     if (entityLogout === "agente") {
       logout("cliente");
     }
@@ -28,10 +32,10 @@ function NavBar() {
     navigateTo
   ) => {
     e.preventDefault();
-    setIsLoading(true);
     try {
-      const updateHistory = await fetch("http://localhost:9000/call_duration", {
-        method: "PATCH",
+      debugger;
+      const updateHistory = await fetch(`${config.baseUrl}/call_duration`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -48,11 +52,9 @@ function NavBar() {
         return;
       }
 
-      handleLogout(entityLogout, navigateTo);
+      handleLogout(null, entityLogout, navigateTo);
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 

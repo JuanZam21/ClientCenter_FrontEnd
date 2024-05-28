@@ -4,6 +4,7 @@ import {Alert, CircularProgress} from "@mui/material";
 import Logo from "../../assets/img/logo.png";
 import useAuth from "../../hooks/useAuth";
 import "./style/login.css";
+import {config} from "../../config/config";
 
 function Login() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function Login() {
     setIsLoading(true);
 
     try {
-      const findClient = await fetch(`http://localhost:9000/api/auth/login`, {
+      const findClient = await fetch(`${config.baseUrl}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

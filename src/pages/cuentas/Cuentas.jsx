@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {CircularProgress} from "@mui/material";
 import ModalResponseCuenta from "./response/CuentasResponse";
 import useAuth from "../../hooks/useAuth";
+import {config} from "../../config/config";
 
 function Cuentas() {
   const navigate = useNavigate();
@@ -20,9 +21,7 @@ function Cuentas() {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(
-        "http://localhost:9000/api/cuenta/questions"
-      );
+      const response = await fetch(`${config.baseUrl}/api/cuenta/questions`);
       const result = await response.json();
 
       if (!result || !result.success) {
@@ -46,8 +45,8 @@ function Cuentas() {
 
     setIsLoading(true);
     const payload = {
-      idCliente: user.cliente?.documento_identidad,
-      idEmpleado: user.agente?.documento_identidad,
+      idCliente: user.cliente?.id,
+      idEmpleado: user.agente?.id,
       tipoAtencion: "cuenta",
       descripcion: solicitud.categoria,
       fechaAtencion: new Date(),

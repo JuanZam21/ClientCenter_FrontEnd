@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {Alert, CircularProgress} from "@mui/material";
 import useAuth from "../../hooks/useAuth";
 import ModalResponseTransaccion from "./response/TransaccionResponse";
+import {config} from "../../config/config";
 
 function Transacciones() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ function Transacciones() {
     setIsLoading(true);
     try {
       const response = await fetch(
-        "http://localhost:9000/api/transaccion/questions"
+        `${config.baseUrl}/api/transaccion/questions`
       );
       const result = await response.json();
 
@@ -44,8 +45,8 @@ function Transacciones() {
 
     setIsLoading(true);
     const payload = {
-      idCliente: user.cliente?.documento_identidad,
-      idEmpleado: user.agente?.documento_identidad,
+      idCliente: user.cliente?.id,
+      idEmpleado: user.agente?.id,
       tipoAtencion: "transacciones",
       descripcion: solicitud.categoria,
       fechaAtencion: new Date(),
@@ -53,7 +54,7 @@ function Transacciones() {
     };
 
     try {
-      const send = await fetch("http://localhost:9000/api/transaccion", {
+      const send = await fetch(`${config.baseUrl}/api/transaccion`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -2,9 +2,10 @@ import React, {useEffect, useState} from "react";
 import {NavBar} from "../../components";
 import {FaArrowLeft} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
-import {CircularProgress} from "@mui/material";
+import {Alert, CircularProgress} from "@mui/material";
 import ModalResponseCredito from "./response/CreditosResponse";
 import useAuth from "../../hooks/useAuth";
+import {config} from "../../config/config";
 
 function Creditos() {
   const navigate = useNavigate();
@@ -20,9 +21,7 @@ function Creditos() {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(
-        "http://localhost:9000/api/credito/questions"
-      );
+      const response = await fetch(`${config.baseUrl}/api/credito/questions`);
       const result = await response.json();
 
       if (!result || !result.success) {
@@ -46,8 +45,8 @@ function Creditos() {
 
     setIsLoading(true);
     const payload = {
-      idCliente: user.cliente?.documento_identidad,
-      idEmpleado: user.agente?.documento_identidad,
+      idCliente: user.cliente?.id,
+      idEmpleado: user.agente?.id,
       tipoAtencion: "credito",
       descripcion: solicitud.categoria,
       fechaAtencion: new Date(),
@@ -55,7 +54,7 @@ function Creditos() {
     };
 
     try {
-      const send = await fetch("http://localhost:9000/api/credito", {
+      const send = await fetch(`${config.baseUrl}/api/credito`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

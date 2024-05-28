@@ -4,6 +4,7 @@ import Modal from "@mui/material/Modal";
 import useAuth from "../../hooks/useAuth";
 import {Alert, CircularProgress} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import { config } from "../../config/config";
 
 const style = {
   position: "absolute",
@@ -39,7 +40,7 @@ export default function ModalIdClient() {
     setIsLoading(true);
     try {
       const findClient = await fetch(
-        `http://localhost:9000/api/auth/client/${id}`
+        `${config.baseUrl}/api/auth/client/${id}`
       );
       const response = await findClient.json();
 

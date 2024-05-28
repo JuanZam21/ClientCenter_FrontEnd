@@ -1,6 +1,8 @@
 import {NavBar} from "../../components";
 import {useNavigate} from "react-router-dom";
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
+import {config} from "../../config/config";
+import useAuth from "../../hooks/useAuth";
 
 function generarDatosHistorialLlamadas(cantidad) {
   const estados = ["activo", "pendiente", "resuelto"];
@@ -40,15 +42,80 @@ export default function Dashboard() {
   const refPastel = useRef(null);
   const refEscala = useRef(null);
 
+  const [dataDuracionLlamadas, setDataDuracionLlamadas] = useState([]);
+  const [dataEstadosLlamadas, setDataEstadosLlamadas] = useState([]);
+  const [dataLlamadas, setDataLlamadas] = useState([]);
+
   const navigate = useNavigate();
+  const {user} = useAuth();
+
+  const fetchDuracionLlamadas = async (id) => {
+    const url = id
+      ? `${config.baseUrl}/graphs/call_count/${id}`
+      : `${config.baseUrl}/graphs/call_count`;
+
+    const response = await fetch(url);
+
+    const result = await response.json();
+    const fechas = Object.keys(result?.data);
+    const duracion = Object.values(result?.data);
+    setDataDuracionLlamadas({
+      fechas: fechas,
+      duracion: duracion,
+    });
+  };
+  const fetchEstadosLlamadas = async (id) => {
+    const url = id
+      ? `${config.baseUrl}/graphs/call_status/${id}`
+      : `${config.baseUrl}/graphs/call_status`;
+
+    const response = await fetch(url);
+    const result = await response.json();
+    const key = Object.keys(result?.data);
+    const value = Object.values(result?.data);
+    console.log(result);
+
+    setDataEstadosLlamadas({
+      estado: key,
+      cantidad: value,
+    });
+  };
+
+  const fetchLlamadas = async (id) => {
+    const url = id
+      ? `${config.baseUrl}/graphs/call_count/${id}`
+      : `${config.baseUrl}/graphs/call_count/`;
+
+    const response = await fetch(url);
+    const result = await response.json();
+    const key = Object.keys(result?.data);
+    const value = Object.values(result?.data);
+    setDataLlamadas({
+      fechas: key,
+      cantidad: value,
+    });
+  };
+
+  useEffect(() => {
+    if (user?.agente?.rol === "admin") {
+      fetchDuracionLlamadas();
+      fetchEstadosLlamadas();
+      fetchLlamadas();
+    }
+    if (user.agente) {
+      fetchDuracionLlamadas(user?.agente?.documento_identidad);
+      fetchEstadosLlamadas(user?.agente?.documento_identidad);
+      fetchLlamadas(user?.agente?.documento_identidad);
+    }
+  }, [user]);
 
   useEffect(() => {
     const datosGraficoBarras = {
-      labels: datos.map((d) => d.fecha),
+      labels: dataDuracionLlamadas?.fechas,
       datasets: [
         {
           label: "Duración de las llamadas (minutos)",
-          data: datos.map((d) => d.duracion_llamada),
+          data: dataDuracionLlamadas?.duracion,
           backgroundColor: "rgba(75,192,192,0.4)",
           borderColor: "rgba(75,192,192,1)",
           borderWidth: 1,
@@ -57,14 +124,10 @@ export default function Dashboard() {
     };
 
     const datosGraficoPastel = {
-      labels: ["Activo", "Pendiente", "Resuelto"],
+      labels: dataEstadosLlamadas?.estado,
       datasets: [
         {
-          data: [
-            datos.filter((d) => d.estado === "activo").length,
-            datos.filter((d) => d.estado === "pendiente").length,
-            datos.filter((d) => d.estado === "resuelto").length,
-          ],
+          data: dataEstadosLlamadas?.cantidad,
           backgroundColor: [
             "rgba(255,99,132,0.2)",
             "rgba(54,162,235,0.2)",
@@ -81,11 +144,11 @@ export default function Dashboard() {
     };
 
     const datosGraficoEscala = {
-      labels: datos.map((d) => d.fecha),
+      labels: dataLlamadas?.fechas,
       datasets: [
         {
           label: "Tus llamadas",
-          data: datos.map((d) => d.id_empleado),
+          data: dataLlamadas?.cantidad,
           fill: false,
           backgroundColor: "rgba(75,192,192,0.4)",
           borderColor: "rgba(75,192,192,1)",
@@ -93,32 +156,41 @@ export default function Dashboard() {
       ],
     };
 
-    // Crear los gráficos
-    const barrasChart = new window.Chart(refBarras.current.getContext("2d"), {
-      type: "bar",
-      data: datosGraficoBarras,
-      options: {responsive: true},
-    });
+    let barrasChart;
+    let pastelChart;
+    let escalaChart;
 
-    const pastelChart = new window.Chart(refPastel.current.getContext("2d"), {
-      type: "pie",
-      data: datosGraficoPastel,
-      options: {responsive: true},
-    });
+    if (dataDuracionLlamadas) {
+      barrasChart = new window.Chart(refBarras.current.getContext("2d"), {
+        type: "bar",
+        data: datosGraficoBarras,
+        options: {responsive: true},
+      });
+    }
 
-    const escalaChart = new window.Chart(refEscala.current.getContext("2d"), {
-      type: "line",
-      data: datosGraficoEscala,
-      options: {responsive: true},
-    });
+    if (dataEstadosLlamadas) {
+      pastelChart = new window.Chart(refPastel.current.getContext("2d"), {
+        type: "pie",
+        data: datosGraficoPastel,
+        options: {responsive: true},
+      });
+    }
+
+    if (dataLlamadas) {
+      escalaChart = new window.Chart(refEscala.current.getContext("2d"), {
+        type: "line",
+        data: datosGraficoEscala,
+        options: {responsive: true},
+      });
+    }
 
     return () => {
       // Destruir los gráficos antes de desmontar el componente
-      barrasChart.destroy();
-      pastelChart.destroy();
-      escalaChart.destroy();
+      if (dataDuracionLlamadas) barrasChart.destroy();
+      if (dataEstadosLlamadas) pastelChart.destroy();
+      if (dataLlamadas) escalaChart.destroy();
     };
-  }, []);
+  }, [dataDuracionLlamadas, dataEstadosLlamadas, dataLlamadas]);
 
   const handleRedirectHome = (e) => {
     e.preventDefault();
